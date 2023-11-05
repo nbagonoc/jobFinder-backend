@@ -30,8 +30,10 @@ app.use(express.json())
 // ROUTES
 const auth = require('./routes/api/auth')
 const users = require('./routes/api/users')
+const jobs = require('./routes/api/jobs')
 app.use('/api/auth', auth)
 app.use('/api/users', users)
+app.use('/api/jobs', jobs)
 
 // SESSION
 const session = require('express-session')
