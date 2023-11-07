@@ -46,12 +46,6 @@ app.use(
     })
 )
 
-// PASSPORT
-const passport = require('passport')
-app.use(passport.initialize())
-app.use(passport.session())
-require('./configs/passport')(passport)
-
 // SET PORT, and START SERVER
 const port = process.env.PORT || 5100
 const server = () => {

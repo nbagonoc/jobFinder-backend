@@ -1,17 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('passport')
-const isAdmin = require('../../guards/isAdmin')
+const isAdmin = require('../../middlewares/isAdmin')
 const userController = require('../../controllers/user.controller')
-const isModOrAdmin = require('../../guards/isModOrAdmin')
+const isModOrAdmin = require('../../middlewares/isModOrAdmin')
 
 // GET
 // api/users
 // administrator/moderator can view users list
 router.get(
     '/',
-    passport.authenticate('jwt', { session: false }),
-    [isModOrAdmin],
+    isModOrAdmin,
     userController.getUsers
 )
 
@@ -20,7 +18,6 @@ router.get(
 // user view view their profile
 router.get(
     '/profile',
-    passport.authenticate('jwt', { session: false }),
     userController.getProfile
 )
 
@@ -29,8 +26,7 @@ router.get(
 // administrator/moderator can view user details
 router.get(
     '/view/:id',
-    passport.authenticate('jwt', { session: false }),
-    [isModOrAdmin],
+    isModOrAdmin,
     userController.getUser
 )
 
@@ -39,8 +35,7 @@ router.get(
 // administrator/moderator can edit user details
 router.put(
     '/update/:id',
-    passport.authenticate('jwt', { session: false }),
-    [isModOrAdmin],
+    isModOrAdmin,
     userController.updateUser
 )
 
@@ -49,8 +44,7 @@ router.put(
 // administrator/moderator can delete user
 router.delete(
     '/delete/:id',
-    passport.authenticate('jwt', { session: false }),
-    [isModOrAdmin],
+    isModOrAdmin,
     userController.deleteUser
 )
 

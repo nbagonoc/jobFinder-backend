@@ -11,7 +11,7 @@ const getProfile = async (req, res) => {
         }
         return res.status(200).json(user)
     } catch (error) {
-        throw new Error(`something went wrong. ${error}`)
+        throw new Error(`Something went wrong. ${error}`)
     }
 }
 
@@ -25,7 +25,7 @@ const getUser = async (req, res) => {
         }
         return res.status(200).json(user)
     } catch (error) {
-        throw new Error(`something went wrong. ${error}`)
+        throw new Error(`Something went wrong. ${error}`)
     }
 }
 
@@ -38,7 +38,7 @@ const getUsers = async (req, res) => {
         }
         return res.status(200).json(users)
     } catch (error) {
-        throw new Error(`something went wrong. ${error}`)
+        throw new Error(`Something went wrong. ${error}`)
     }
 }
 
@@ -59,7 +59,7 @@ const updateUser = async (req, res) => {
         await user.save()
         return res.status(200).json({ message: 'User updated!' })
     } catch (error) {
-        throw new Error(`something went wrong. ${error}`)
+        throw new Error(`Something went wrong. ${error}`)
     }
 }
 
@@ -73,7 +73,7 @@ const deleteUser = async (req, res) => {
         await user.remove()
         return res.status(200).json({ message: 'User has been removed.' })
     } catch (error) {
-        throw new Error(`something went wrong. ${error}`)
+        throw new Error(`Something went wrong. ${error}`)
     }
 }
 

@@ -1,15 +1,16 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('passport')
+
 const jobController = require('../../controllers/job.controller')
-const isModOrAdmin = require('../../guards/isModOrAdmin')
+const isAuth = require('../../middlewares/isAuth')
+const isModOrAdmin = require('../../middlewares/isModOrAdmin')
 
 // POST
 // api/jobs
 // employeer can create job
 router.post(
     '/',
-    passport.authenticate('jwt', { session: false }),
+    isAuth,
     jobController.createJob
 )
 
@@ -18,7 +19,7 @@ router.post(
 // users can view users list
 router.get(
     '/',
-    passport.authenticate('jwt', { session: false }),
+    isAuth,
     jobController.getJobs
 )
 
@@ -27,7 +28,7 @@ router.get(
 // users can view user details
 router.get(
     '/view/:id',
-    passport.authenticate('jwt', { session: false }),
+    isAuth,
     jobController.getJob
 )
 
@@ -36,8 +37,7 @@ router.get(
 // employeers can edit user details
 router.put(
     '/update/:id',
-    passport.authenticate('jwt', { session: false }),
-    [isModOrAdmin],
+    isModOrAdmin,
     jobController.updateJob
 )
 
@@ -46,8 +46,7 @@ router.put(
 // employers can delete user
 router.delete(
     '/delete/:id',
-    passport.authenticate('jwt', { session: false }),
-    [isModOrAdmin],
+    isModOrAdmin,
     jobController.deleteJob
 )
 

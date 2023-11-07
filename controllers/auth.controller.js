@@ -25,7 +25,7 @@ const register = async (req, res) => {
         await newUser.save()
         res.status(200).json({ message: 'User registered' })
     } catch (error) {
-        throw new Error(`something went wrong. ${error}`)
+        throw new Error(`Something went wrong. ${error}`)
     }
 }
 
@@ -58,7 +58,7 @@ const login = async (req, res) => {
         const token = await tokenizer(payload)
         res.status(200).json({ token: token })
     } catch (error) {
-        throw new Error(`something went wrong. ${error}`)
+        throw new Error(`Something went wrong. ${error}`)
     }
 }
 

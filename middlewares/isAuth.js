@@ -18,6 +18,7 @@ const isAuth = async (req, res, next) => {
         next()
     } catch (error) {
         res.status(401).json({ message: 'Request is not authorized' })
+        throw new Error(`Something went wrong. ${error}`)
     }
 }
 

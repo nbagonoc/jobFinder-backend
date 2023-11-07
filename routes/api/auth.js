@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const authController = require('../../controllers/auth.controller')
-const isAuth = require('../../guards/isAuth')
+const isAuth = require('../../middlewares/isAuth')
 
 // POST
 //  api/auth/register
