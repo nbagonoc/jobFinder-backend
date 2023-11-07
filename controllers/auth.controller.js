@@ -116,7 +116,7 @@ const passwordChecker = async (password, comparePassword) => {
 // JWT SIGN
 const tokenizer = (payload) => {
     const token = jwt.sign(payload, key.secretOrKey, { expiresIn: 86400 })
-    return 'JWT ' + token
+    return token
 }
 
 // TEST AUTH
