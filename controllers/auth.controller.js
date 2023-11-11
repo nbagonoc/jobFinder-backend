@@ -23,7 +23,7 @@ const register = async (req, res) => {
         })
 
         await newUser.save()
-        res.status(200).json({ message: 'User registered' })
+        res.status(200).send('User registered')
     } catch (error) {
         throw new Error(`Something went wrong. ${error}`)
     }
@@ -120,8 +120,9 @@ const tokenizer = (payload) => {
 }
 
 // TEST AUTH
-const authTest = (req, res) =>
-    res.status(200).json({ message: 'you are authorized' })
+const authTest = (req, res) => {
+    res.status(200).send('you are authorized')
+}
 
 module.exports = {
     register,
