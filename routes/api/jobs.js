@@ -10,31 +10,29 @@ const isModOrAdmin = require('../../middlewares/isModOrAdmin')
 // employeer can create job
 router.post(
     '/',
-    isAuth,
+    isModOrAdmin,
     jobController.createJob
 )
 
 // GET
 // api/jobs
-// users can view users list
+// everyone can view users list
 router.get(
     '/',
-    isAuth,
     jobController.getJobs
 )
 
 // GET
 // api/jobs/view/:id
-// users can view user details
+// everyone can view job details
 router.get(
     '/view/:id',
-    isAuth,
     jobController.getJob
 )
 
 // PUT
 // api/jobs/update
-// employeers can edit user details
+// employeers can edit job details
 router.put(
     '/update/:id',
     isModOrAdmin,
@@ -43,7 +41,7 @@ router.put(
 
 // DELETE
 // api/jobs/delete/:id
-// employers can delete user
+// employers can delete job
 router.delete(
     '/delete/:id',
     isModOrAdmin,
