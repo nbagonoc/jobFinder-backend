@@ -7,7 +7,7 @@ const isModOrAdmin = require('../../middlewares/isModOrAdmin')
 
 // POST
 // api/jobs
-// employeer can create job
+// recruiter can create job
 router.post(
     '/',
     isModOrAdmin,
@@ -32,7 +32,7 @@ router.get(
 
 // PUT
 // api/jobs/update
-// employeers can edit job details
+// recruiter can edit job details
 router.put(
     '/update/:id',
     isModOrAdmin,
@@ -41,7 +41,7 @@ router.put(
 
 // DELETE
 // api/jobs/delete/:id
-// employers can delete job
+// recruiter can delete job
 router.delete(
     '/delete/:id',
     isModOrAdmin,
