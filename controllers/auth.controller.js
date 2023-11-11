@@ -8,11 +8,11 @@ const key = require('../configs/dbSecretKeys')
 // REGISTER
 const register = async (req, res) => {
     const validation = validateRegister(req.body)
-    if (!validation.isValid) return res.status(400).json(validation.errors)
+    if (!validation.isValid) return res.status(400).json({errors: validation.errors})
 
     try {
         const user = await User.findOne({ email: req.body.email })
-        if (user) return res.status(400).json({ email: 'Email already exist' })
+        if (user) return res.status(400).json({ message: 'Email already exist' })
 
         const hashedPassword = await passwordHasher(req.body.password)
         const newUser = new User({
@@ -32,7 +32,7 @@ const register = async (req, res) => {
 // LOGIN
 const login = async (req, res) => {
     const validation = validateLogin(req.body)
-    if (!validation.isValid) return res.status(400).json(validation.errors)
+    if (!validation.isValid) return res.status(400).json({errors: validation.errors})
 
     try {
         const user = await User.findOne({ email: req.body.email })
