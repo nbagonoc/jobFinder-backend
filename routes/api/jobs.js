@@ -23,27 +23,27 @@ router.get(
 )
 
 // GET
-// api/jobs/view/:id
+// api/jobs/:id
 // everyone can view job details
 router.get(
-    '/view/:id',
+    '/:id',
     jobController.getJob
 )
 
 // PUT
-// api/jobs/update
+// api/jobs/:id
 // recruiter can edit job details
 router.put(
-    '/update/:id',
+    '/:id',
     isModOrAdmin,
     jobController.updateJob
 )
 
 // DELETE
-// api/jobs/delete/:id
+// api/jobs/:id
 // recruiter can delete job
 router.delete(
-    '/delete/:id',
+    '/:id',
     isModOrAdmin,
     jobController.deleteJob
 )
