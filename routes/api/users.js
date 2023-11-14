@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const isAdmin = require('../../middlewares/isAdmin')
+const isAuth = require('../../middlewares/isAuth')
 const userController = require('../../controllers/user.controller')
 const isModOrAdmin = require('../../middlewares/isModOrAdmin')
 
@@ -18,6 +19,7 @@ router.get(
 // user view view their profile
 router.get(
     '/profile',
+    isAuth,
     userController.getProfile
 )
 
