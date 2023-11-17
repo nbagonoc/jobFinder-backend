@@ -89,15 +89,15 @@ const validate = (data) => {
     let errors = {}
 
     if (validator.isEmpty(data.title, { ignore_whitespace: true }))
-        errors.title = 'First name is required'
+        errors.title = 'Title is required'
     if (validator.isEmpty(data.company, { ignore_whitespace: true }))
-        errors.company = 'Last name is required'
+        errors.company = 'Company is required'
     if (validator.isEmpty(data.location, { ignore_whitespace: true }))
-        errors.location = 'Email is required'
+        errors.location = 'Location is required'
     if (validator.isEmpty(data.position, { ignore_whitespace: true }))
-        errors.position = 'Role is required'
+        errors.position = 'Position is required'
     if (validator.isEmpty(data.description, { ignore_whitespace: true }))
-        errors.description = 'Role is required'
+        errors.description = 'Description is required'
     return {
         errors,
         isValid: Object.keys(errors).length === 0,
