@@ -61,9 +61,9 @@ const updateJob = async (req, res) => {
             return res.status(404).json({ message: 'job not found.' })
         }
 
-        const { title, company, location, position, description } = req.body
-        Job.set({ title, company, location, position, description })
-        await Job.save()
+        job.set({ ...req.body })
+
+        await job.save()
         return res.status(200).json({ message: 'job updated!' })
     } catch (error) {
         throw new Error(`Something went wrong. ${error}`)
