@@ -13,9 +13,10 @@ const createJob = async (req, res) => {
             location: req.body.location,
             position: req.body.position,
             description: req.body.description,
+            user_id: req.user._id,
         })
 
-        await newJob.save()
+        await newJob.create()
         res.status(200).json({ message: 'Job created' })
     } catch (error) {
         throw new Error(`Something went wrong. ${error}`)
