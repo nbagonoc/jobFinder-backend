@@ -22,8 +22,9 @@ const JobSchema = new Schema({
         type: String,
         required: true,
     },
-    user_id: {
-        type: String,
+    employer: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
         required: true,
     },
     date: {

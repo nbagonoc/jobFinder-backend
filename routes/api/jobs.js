@@ -23,6 +23,15 @@ router.get(
 )
 
 // GET
+// api/jobs
+// everyone can view users list
+router.get(
+    '/owned',
+    isModOrAdmin,
+    jobController.getOwnedJobs
+)
+
+// GET
 // api/jobs/:id
 // everyone can view job details
 router.get(

@@ -13,10 +13,10 @@ const createJob = async (req, res) => {
             location: req.body.location,
             position: req.body.position,
             description: req.body.description,
-            user_id: req.user._id,
+            employer: req.user._id,
         })
 
-        await newJob.create()
+        await Job.create(newJob)
         res.status(200).json({ message: 'Job created' })
     } catch (error) {
         throw new Error(`Something went wrong. ${error}`)
@@ -41,7 +41,21 @@ const getJob = async (req, res) => {
 const getJobs = async (req, res) => {
     try {
         const jobs = await Job.find().sort({ _id: -1 }).select('-description')
-        if (!jobs) {
+        if (!jobs || jobs.length === 0) {
+            return res.status(404).json({ message: 'Jobs not found.' })
+        }
+        return res.status(200).json(jobs)
+    } catch (error) {
+        throw new Error(`Something went wrong. ${error}`)
+    }
+}
+
+// GET OWNED JOB LIST (Employer owned)
+const getOwnedJobs = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const jobs = await Job.find({ employer: userId }).sort({ _id: -1 }).select('-description')
+        if (!jobs || jobs.length === 0) {
             return res.status(404).json({ message: 'Jobs not found.' })
         }
         return res.status(200).json(jobs)
@@ -109,6 +123,7 @@ module.exports = {
     createJob,
     getJob,
     getJobs,
+    getOwnedJobs,
     updateJob,
     deleteJob,
     validate,
