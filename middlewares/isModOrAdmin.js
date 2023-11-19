@@ -14,7 +14,7 @@ const isModOrAdmin = async (req, res, next) => {
         const token = authorization.split(' ')[1]
         const { _id, role } = jwt.verify(token, key.secretOrKey)
         
-        if (!(role == 'moderator' || role == 'admin')) {
+        if (!(role == 'recruiter' || role == 'admin')) {
             return res.status(401).json({ message: 'Request is not authorized' })
         }
 

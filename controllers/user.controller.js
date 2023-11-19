@@ -89,7 +89,7 @@ const validateUpdate = (data) => {
         errors.email = 'Email is invalid'
     if (validator.isEmpty(data.email, { ignore_whitespace: true }))
         errors.email = 'Email is required'
-    if (!validator.equals(data.role, 'moderator') && !validator.equals(data.role, 'user'))
+    if (!validator.equals(data.role, 'recruiter') && !validator.equals(data.role, 'user'))
         errors.role = 'Role is invalid'
     if (validator.isEmpty(data.role, { ignore_whitespace: true }))
         errors.role = 'Role is required'

@@ -7,7 +7,7 @@ const isModOrAdmin = require('../../middlewares/isModOrAdmin')
 
 // GET
 // api/users
-// administrator/moderator can view users list
+// administrator/recruiter can view users list
 router.get(
     '/',
     isModOrAdmin,
@@ -25,7 +25,7 @@ router.get(
 
 // GET
 // api/users/view/:id
-// administrator/moderator can view user details
+// administrator/recruiter can view user details
 router.get(
     '/view/:id',
     isModOrAdmin,
@@ -34,7 +34,7 @@ router.get(
 
 // PUT
 // api/users/update
-// administrator/moderator can edit user details
+// administrator/recruiter can edit user details
 router.put(
     '/update/:id',
     isModOrAdmin,
@@ -43,7 +43,7 @@ router.put(
 
 // DELETE
 // api/users/delete/:id
-// administrator/moderator can delete user
+// administrator/recruiter can delete user
 router.delete(
     '/delete/:id',
     isModOrAdmin,
