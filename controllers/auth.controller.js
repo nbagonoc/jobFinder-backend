@@ -8,7 +8,7 @@ const key = require('../configs/dbSecretKeys')
 // REGISTER
 const register = async (req, res) => {
     const validation = validateRegister(req.body)
-    if (!validation.isValid) return res.status(400).json({errors: validation.errors})
+    if (!validation.isValid) return res.status(400).json(validation.errors)
 
     try {
         const user = await User.findOne({ email: req.body.email })
