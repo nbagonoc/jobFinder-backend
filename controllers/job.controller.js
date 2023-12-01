@@ -3,6 +3,7 @@ const validator = require('validator')
 
 // CREATE JOB
 const createJob = async (req, res) => {
+    console.log(req.body)
     const validation = validate(req.body)
     if (!validation.isValid) return res.status(400).json(validation.errors)
 
@@ -101,23 +102,23 @@ const deleteJob = async (req, res) => {
     }
 }
 
-// VALIDATE UPDATE
+// VALIDATE
 const validate = (data) => {
     let errors = {}
 
-    if (validator.isEmpty(data.title, { ignore_whitespace: true }))
+    if (!('title' in data) || validator.isEmpty(data.title, { ignore_whitespace: true }))
         errors.title = 'Title is required'
-    if (validator.isEmpty(data.company, { ignore_whitespace: true }))
+    if (!('company' in data) || validator.isEmpty(data.company, { ignore_whitespace: true }))
         errors.company = 'Company is required'
-    if (validator.isEmpty(data.location, { ignore_whitespace: true }))
+    if (!('location' in data) || validator.isEmpty(data.location, { ignore_whitespace: true }))
         errors.location = 'Location is required'
-    if (validator.isEmpty(data.category, { ignore_whitespace: true }))
+    if (!('category' in data) || validator.isEmpty(data.category, { ignore_whitespace: true }))
         errors.category = 'Category is required'
-    if (data.salary === null || data.salary === undefined || isNaN(data.salary))
-        errors.category = 'Salary is required'
-    if (validator.isEmpty(data.position, { ignore_whitespace: true }))
+    if (!('salary' in data) || !validator.isNumeric(data.salary))
+        errors.salary = 'Salary is required / should be a number'
+    if (!('position' in data) || validator.isEmpty(data.position, { ignore_whitespace: true }))
         errors.position = 'Position is required'
-    if (validator.isEmpty(data.description, { ignore_whitespace: true }))
+    if (!('description' in data) || validator.isEmpty(data.description, { ignore_whitespace: true }))
         errors.description = 'Description is required'
     return {
         errors,
