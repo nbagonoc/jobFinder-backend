@@ -21,6 +21,7 @@ const register = async (req, res) => {
             email: req.body.email,
             role: req.body.role === 'recruiter' ? 'recruiter' : 'applicant',
             password: hashedPassword,
+            // company: req.body.company,
         })
 
         await newUser.save()

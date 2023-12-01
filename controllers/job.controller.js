@@ -11,6 +11,8 @@ const createJob = async (req, res) => {
             title: req.body.title,
             company: req.body.company,
             location: req.body.location,
+            category: req.body.category,
+            salary: req.body.salary,
             position: req.body.position,
             description: req.body.description,
             recruiter: req.user._id,
@@ -109,6 +111,10 @@ const validate = (data) => {
         errors.company = 'Company is required'
     if (validator.isEmpty(data.location, { ignore_whitespace: true }))
         errors.location = 'Location is required'
+    if (validator.isEmpty(data.category, { ignore_whitespace: true }))
+        errors.category = 'Category is required'
+    if (data.salary === null || data.salary === undefined || isNaN(data.salary))
+        errors.category = 'Salary is required'
     if (validator.isEmpty(data.position, { ignore_whitespace: true }))
         errors.position = 'Position is required'
     if (validator.isEmpty(data.description, { ignore_whitespace: true }))
