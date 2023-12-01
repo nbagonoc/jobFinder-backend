@@ -3,7 +3,6 @@ const validator = require('validator')
 
 // CREATE JOB
 const createJob = async (req, res) => {
-    console.log(req.body)
     const validation = validate(req.body)
     if (!validation.isValid) return res.status(400).json(validation.errors)
 
@@ -105,6 +104,7 @@ const deleteJob = async (req, res) => {
 // VALIDATE
 const validate = (data) => {
     let errors = {}
+    let validCategories = ['it', 'business_management', 'healthcare', 'education', 'engineering', 'sales_customer_service', 'creative_arts_design', 'science_research', 'hospitality_tourism']
 
     if (!('title' in data) || validator.isEmpty(data.title, { ignore_whitespace: true }))
         errors.title = 'Title is required'
@@ -114,6 +114,8 @@ const validate = (data) => {
         errors.location = 'Location is required'
     if (!('category' in data) || validator.isEmpty(data.category, { ignore_whitespace: true }))
         errors.category = 'Category is required'
+    else if (!validCategories.includes(data.category))
+        errors.category = 'Category is invalid'
     if (!('salary' in data) || !validator.isNumeric(data.salary))
         errors.salary = 'Salary is required / should be a number'
     if (!('position' in data) || validator.isEmpty(data.position, { ignore_whitespace: true }))
