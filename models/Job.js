@@ -16,6 +16,7 @@ const JobSchema = new Schema({
     },
     category: {
         type: String,
+        enum: ['Information and Technology', 'Business and Management', 'Healthcare', 'Education', 'Engineering', 'Sales and Customer Service', 'Creative Arts and Design', 'Science and Research', 'Hospitality and Tourism'],
         required: true,
     },
     salary: {
@@ -24,6 +25,16 @@ const JobSchema = new Schema({
     },
     position: {
         type: String,
+        required: true,
+    },
+    arrangement: {
+        type: String,
+        enum: ['On-site', 'Remote', 'Hybrid'],
+        required: true,
+    },
+    type: {
+        type: String,
+        enum: ['Full-time', 'Part-time'],
         required: true,
     },
     description: {

@@ -14,6 +14,8 @@ const createJob = async (req, res) => {
             category: req.body.category,
             salary: req.body.salary,
             position: req.body.position,
+            arrangement: req.body.arrangement,
+            type: req.body.type,
             description: req.body.description,
             recruiter: req.user._id,
         })
@@ -94,7 +96,7 @@ const deleteJob = async (req, res) => {
         if (!job) {
             return res.status(404).json({ message: 'job not found.' })
         }
-        await Job.remove()
+        await Job.deleteOne()
         return res.status(200).json({ message: 'job has been removed.' })
     } catch (error) {
         throw new Error(`Something went wrong. ${error}`)
@@ -104,7 +106,9 @@ const deleteJob = async (req, res) => {
 // VALIDATE
 const validate = (data) => {
     let errors = {}
-    let validCategories = ['it', 'business_management', 'healthcare', 'education', 'engineering', 'sales_customer_service', 'creative_arts_design', 'science_research', 'hospitality_tourism']
+    let validCategories = ['Information and Technology', 'Business and Management', 'Healthcare', 'Education', 'Engineering', 'Sales and Customer Service', 'Creative Arts and Design', 'Science and Research', 'Hospitality and Tourism']
+    let validArrangements = ['On-site', 'Remote', 'Hybrid']
+    let validtypes = ['Full-time', 'Part-time']
 
     if (!('title' in data) || validator.isEmpty(data.title, { ignore_whitespace: true }))
         errors.title = 'Title is required'
@@ -112,10 +116,25 @@ const validate = (data) => {
         errors.company = 'Company is required'
     if (!('location' in data) || validator.isEmpty(data.location, { ignore_whitespace: true }))
         errors.location = 'Location is required'
+
+    // category
     if (!('category' in data) || validator.isEmpty(data.category, { ignore_whitespace: true }))
         errors.category = 'Category is required'
     else if (!validCategories.includes(data.category))
         errors.category = 'Category is invalid'
+
+    // arrangement
+    if (!('arrangement' in data) || validator.isEmpty(data.arrangement, { ignore_whitespace: true }))
+        errors.arrangement = 'Arrangements is required'
+    else if (!validCategories.includes(data.arrangement))
+        errors.arrangement = 'Arrangement is invalid'
+
+    // type
+    if (!('type' in data) || validator.isEmpty(data.type, { ignore_whitespace: true }))
+        errors.type = 'Type is required'
+    else if (!validCategories.includes(data.type))
+        errors.type = 'Type is invalid'
+
     if (!('salary' in data) || !validator.isNumeric(data.salary))
         errors.salary = 'Salary is required / should be a number'
     if (!('position' in data) || validator.isEmpty(data.position, { ignore_whitespace: true }))
