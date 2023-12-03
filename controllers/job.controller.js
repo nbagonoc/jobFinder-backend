@@ -116,26 +116,25 @@ const validate = (data) => {
         errors.company = 'Company is required'
     if (!('location' in data) || validator.isEmpty(data.location, { ignore_whitespace: true }))
         errors.location = 'Location is required'
-
     // category
-    if (!('category' in data) || validator.isEmpty(data.category, { ignore_whitespace: true }))
+    if (!('category' in data) || validator.isEmpty(data.category, { ignore_whitespace: true })) {
         errors.category = 'Category is required'
-    else if (!validCategories.includes(data.category))
+    } else if (!validCategories.includes(data.category)) {
         errors.category = 'Category is invalid'
-
+    }
     // arrangement
-    if (!('arrangement' in data) || validator.isEmpty(data.arrangement, { ignore_whitespace: true }))
+    if (!('arrangement' in data) || validator.isEmpty(data.arrangement, { ignore_whitespace: true })) {
         errors.arrangement = 'Arrangements is required'
-    else if (!validCategories.includes(data.arrangement))
+    } else if (!validArrangements.includes(data.arrangement)) {
         errors.arrangement = 'Arrangement is invalid'
-
+    }
     // type
-    if (!('type' in data) || validator.isEmpty(data.type, { ignore_whitespace: true }))
+    if (!('type' in data) || validator.isEmpty(data.type, { ignore_whitespace: true })) {
         errors.type = 'Type is required'
-    else if (!validCategories.includes(data.type))
+    } else if (!validtypes.includes(data.type)) {
         errors.type = 'Type is invalid'
-
-    if (!('salary' in data) || !validator.isNumeric(data.salary))
+    }
+    if (!('salary' in data) || (typeof data.salary !== 'number' && !isNaN(data.salary)))
         errors.salary = 'Salary is required / should be a number'
     if (!('position' in data) || validator.isEmpty(data.position, { ignore_whitespace: true }))
         errors.position = 'Position is required'
