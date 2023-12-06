@@ -37,17 +37,17 @@ router.get(
 // administrator/recruiter can edit user details
 router.put(
     '/update/:id',
-    isModOrAdmin,
+    isAuth,
     userController.updateUser
 )
 
 // DELETE
 // api/users/delete/:id
 // administrator/recruiter can delete user
-router.delete(
-    '/delete/:id',
-    isModOrAdmin,
-    userController.deleteUser
-)
+// router.delete(
+//     '/delete/:id',
+//     isModOrAdmin,
+//     userController.deleteUser
+// )
 
 module.exports = router

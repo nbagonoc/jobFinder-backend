@@ -63,18 +63,18 @@ const updateUser = async (req, res) => {
 }
 
 // DELETE USER
-const deleteUser = async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id)
-        if (!user) {
-            return res.status(404).json({ message: 'User not found.' })
-        }
-        await user.remove()
-        return res.status(200).json({ message: 'User has been removed.' })
-    } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
-    }
-}
+// const deleteUser = async (req, res) => {
+//     try {
+//         const user = await User.findById(req.params.id)
+//         if (!user) {
+//             return res.status(404).json({ message: 'User not found.' })
+//         }
+//         await user.remove()
+//         return res.status(200).json({ message: 'User has been removed.' })
+//     } catch (error) {
+//         throw new Error(`Something went wrong. ${error}`)
+//     }
+// }
 
 
 // VALIDATE UPDATE
@@ -104,6 +104,6 @@ module.exports = {
     getUser,
     getUsers,
     updateUser,
-    deleteUser,
+    // deleteUser,
     validateUpdate
 }
