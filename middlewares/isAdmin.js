@@ -21,8 +21,10 @@ const isAdmin = async (req, res, next) => {
         req.user = await User.findOne({ _id }).select('_id')
         next()
     } catch (error) {
-        res.status(401).json({ message: 'Request is not authorized' })
-        throw new Error(`Something went wrong. ${error}`)
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({ message: 'Token has expired' });
+        }
+        return res.status(500).json({ message: 'Internal Server Error' });
     }
 }
 
