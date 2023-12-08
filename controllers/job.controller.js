@@ -46,25 +46,6 @@ const applyJob = async (req, res) => {
     }
 }
 
-// WITHDRAW JOB
-const withdrawJob = async (req, res) => {
-    try {
-        const job = await Job.findById(req.params.id)
-        if (!job) {
-            return res.status(404).json({ message: 'job not found.' })
-        }
-        // check if user already applied
-        if (!job.applicants.includes(req.user._id)) {
-            return res.status(400).json({ message: 'You have not applied to this job.' })
-        }
-        job.applicants.pull(req.user._id)
-        await job.save()
-        return res.status(200).json({ message: 'You have successfully withdrawn to this job.' })
-    } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
-    }
-}
-
 // GET JOB
 const getJob = async (req, res) => {
     try {

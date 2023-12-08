@@ -23,15 +23,6 @@ router.post(
     jobController.applyJob
 )
 
-// POST
-// api/job/:id/withdraw
-// applicant can apply job
-router.post(
-    '/:id/withdraw',
-    isAuth,
-    jobController.applyJob
-)
-
 // GET
 // api/jobs
 // everyone can view users list
