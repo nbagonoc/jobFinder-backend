@@ -168,7 +168,6 @@ const validate = (data) => {
 module.exports = {
     createJob,
     applyJob,
-    withdrawJob,
     getJob,
     getJobs,
     getOwnedJobs,
