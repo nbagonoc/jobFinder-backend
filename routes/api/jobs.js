@@ -48,6 +48,15 @@ router.get(
     jobController.getJob
 )
 
+// GET
+// api/jobs/:id/applicants
+// get list of applicants associated with the jobID
+router.get(
+    '/:id/applicants',
+    isModOrAdmin,
+    jobController.getJobApplicants
+)
+
 // PUT
 // api/jobs/:id
 // recruiter can edit job details

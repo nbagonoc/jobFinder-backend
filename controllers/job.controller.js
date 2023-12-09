@@ -60,6 +60,19 @@ const getJob = async (req, res) => {
     }
 }
 
+// GET JOB APPLICANTS
+const getJobApplicants = async (req, res) => {
+    try {
+        const job = await Job.findById(req.params.id).populate('applicants', 'firstName lastName email')
+        if (!job) {
+            return res.status(404).json({ message: 'job not found.' })
+        }
+        return res.status(200).json(job.applicants)
+    } catch (error) {
+        throw new Error(`Something went wrong. ${error}`)
+    }
+}
+
 // GET JOB LIST
 const getJobs = async (req, res) => {
     try {
@@ -169,6 +182,7 @@ module.exports = {
     createJob,
     applyJob,
     getJob,
+    getJobApplicants,
     getJobs,
     getOwnedJobs,
     updateJob,
