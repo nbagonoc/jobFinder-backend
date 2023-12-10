@@ -19,6 +19,10 @@ const UserSchema = new Schema({
         default: 'applicant',
         required: true,
     },
+    applications: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Application',
+    }],
     password: {
         type: String,
         required: true,

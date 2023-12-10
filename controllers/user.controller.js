@@ -1,10 +1,11 @@
 const User = require('../models/User')
-const validator = require("validator");
+const Application = require('../models/Application')
+const validator = require("validator")
 
 // VIEW PROFILE
 const getProfile = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select('-password -__v')
+        const user = await User.findById(req.user.id).select('-password -__v -applications')
         if (!user) {
             return res.status(404).json({ message: 'User not found.' })
         }
@@ -13,6 +14,26 @@ const getProfile = async (req, res) => {
         throw new Error(`Something went wrong. ${error}`)
     }
 }
+
+// GET USER APPLICATIONS
+const getUserApplications = async (req, res) => {
+    try {
+        const userId = req.user.id
+        
+        const applications = await Application.find({ user: userId })
+        .populate('job', 'title position')
+        .select('-__v')
+
+        if (!applications) {
+            return res.status(404).json({ message: 'Applications not found.' })
+        }
+
+        return res.status(200).json(applications)
+    } catch (error) {
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
+    }
+}
+
 
 // GET USER
 const getUser = async (req, res) => {
@@ -53,8 +74,8 @@ const updateUser = async (req, res) => {
             return res.status(404).json({ message: 'User not found.' })
         }
 
-        const { firstName, lastName, role } = req.body;
-        user.set({ firstName, lastName, role });
+        const { firstName, lastName, role } = req.body
+        user.set({ firstName, lastName, role })
         await user.save()
         return res.status(200).json({ message: 'User updated!' })
     } catch (error) {
@@ -105,5 +126,6 @@ module.exports = {
     getUsers,
     updateUser,
     // deleteUser,
+    getUserApplications,
     validateUpdate
 }

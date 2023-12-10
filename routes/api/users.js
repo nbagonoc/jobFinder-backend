@@ -24,6 +24,15 @@ router.get(
 )
 
 // GET
+// api/users/applications
+// user can view their applications
+router.get(
+    '/applications',
+    isAuth,
+    userController.getUserApplications
+)
+
+// GET
 // api/users/view/:id
 // administrator/recruiter can view user details
 router.get(
