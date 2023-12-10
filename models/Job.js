@@ -46,9 +46,9 @@ const JobSchema = new Schema({
         ref: 'User',
         required: true,
     },
-    applicants: [{
+    applications: [{
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Application',
     }],
     date: {
         type: Date,

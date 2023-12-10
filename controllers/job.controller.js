@@ -1,4 +1,5 @@
 const Job = require('../models/Job')
+const Application = require('../models/Application')
 const validator = require('validator')
 
 // CREATE JOB
@@ -27,24 +28,39 @@ const createJob = async (req, res) => {
     }
 }
 
-// APPLY JOB
+// APPLY JOB (might want to move this to a new controller and route?)
 const applyJob = async (req, res) => {
     try {
-        const job = await Job.findById(req.params.id)
+        const jobId = req.params.id
+        const userId = req.user._id
+
+        const job = await Job.findById(jobId)
         if (!job) {
-            return res.status(404).json({ message: 'job not found.' })
+            return res.status(404).json({ message: 'Job not found.' })
         }
-        // check if user already applied
-        if (job.applicants.includes(req.user._id)) {
+
+        const existingApplication = await Application.findOne({ user: userId, job: jobId })
+        if (existingApplication) {
             return res.status(400).json({ message: 'You already applied to this job.' })
         }
-        job.applicants.push(req.user._id)
+
+        const newApplication = new Application({
+            user: userId,
+            job: jobId,
+            status: 'Pending',
+        })
+
+        await newApplication.save()
+
+        job.applications.push(newApplication._id)
         await job.save()
+
         return res.status(200).json({ message: 'You have successfully applied to this job.' })
     } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
 }
+
 
 // GET JOB
 const getJob = async (req, res) => {
@@ -60,16 +76,34 @@ const getJob = async (req, res) => {
     }
 }
 
-// GET JOB APPLICANTS
+// GET JOB APPLICANTS (might want to move this to a new controller and route?)
 const getJobApplicants = async (req, res) => {
     try {
-        const job = await Job.findById(req.params.id).populate('applicants', 'firstName lastName email')
+        const jobId = req.params.id
+
+        const job = await Job.findById(jobId).populate({
+            path: 'applications',
+            select: 'user status',
+            populate: {
+                path: 'user',
+                select: 'firstName lastName email',
+            },
+        })
+
         if (!job) {
-            return res.status(404).json({ message: 'job not found.' })
+            return res.status(404).json({ message: 'Job not found.' })
         }
-        return res.status(200).json(job.applicants)
+
+        const formattedApplicants = job.applications.map((application) => ({
+            firstName: application.user.firstName,
+            lastName: application.user.lastName,
+            status: application.status,
+            email: application.user.email,
+        }))
+
+        return res.status(200).json(formattedApplicants)
     } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
 }
 
@@ -89,7 +123,7 @@ const getJobs = async (req, res) => {
 // GET OWNED JOB LIST (Recruiter owned)
 const getOwnedJobs = async (req, res) => {
     try {
-        const userId = req.user._id;
+        const userId = req.user._id
         const jobs = await Job.find({ recruiter: userId }).sort({ _id: -1 }).select('-description')
         if (!jobs || jobs.length === 0) {
             return res.status(404).json({ message: 'Jobs not found.' })
