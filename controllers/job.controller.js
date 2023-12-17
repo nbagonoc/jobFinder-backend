@@ -104,6 +104,7 @@ const getJobApplicants = async (req, res) => {
         }
 
         const formattedApplicants = job.applications.map((application) => ({
+            _id: application._id,
             firstName: application.user.firstName,
             lastName: application.user.lastName,
             status: application.status,
