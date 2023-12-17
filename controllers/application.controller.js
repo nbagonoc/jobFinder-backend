@@ -94,6 +94,11 @@ const updateApplicationStatus = async (req, res) => {
         const applicationId = req.params.id
         const status = req.body.status
 
+        const allowedStatus = ['Pending', 'Denied', 'Whitelisted', 'Approved', ]
+        if (!allowedStatus.includes(status)) {
+            return res.status(400).json({ message: 'Invalid status provided.' })
+        }
+
         const application = await Application.findById(applicationId)
         if (!application) {
             return res.status(404).json({ message: 'Application not found.' })

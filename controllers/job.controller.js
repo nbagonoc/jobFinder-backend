@@ -159,8 +159,8 @@ const updateJob = async (req, res) => {
         }
 
         job.set({ ...req.body })
-
         await job.save()
+
         return res.status(200).json({ message: 'job updated!' })
     } catch (error) {
         throw new Error(`Something went wrong. ${error}`)
