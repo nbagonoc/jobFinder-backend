@@ -28,7 +28,7 @@ const createJob = async (req, res) => {
     }
 }
 
-// APPLY JOB (might want to move this to a new controller and route?)
+// APPLY JOB (deprecate this soon, once frontend is uses new endpoint)
 const applyJob = async (req, res) => {
     try {
         const jobId = req.params.id
@@ -65,16 +65,17 @@ const applyJob = async (req, res) => {
 // GET JOB
 const getJob = async (req, res) => {
     try {
-        const job = await Job.findById(req.params.id)
-        .populate({
-            path: 'applications',
-            select: '_id user',
-            populate: {
-                path: 'user',
-                select: '_id'
-            }
-        })
-        .exec()
+        const job = await Job
+                            .findById(req.params.id)
+                            .populate({
+                                path: 'applications',
+                                select: '_id user',
+                                populate: {
+                                    path: 'user',
+                                    select: '_id'
+                                }
+                            })
+                            .exec()
 
         if (!job) {
             return res.status(404).json({ message: 'job not found.' })
@@ -85,30 +86,31 @@ const getJob = async (req, res) => {
     }
 }
 
-// GET JOB APPLICANTS (might want to move this to a new controller and route?)
+// GET JOB APPLICANTS (deprecate this soon, once frontend is uses new endpoint)
 const getJobApplicants = async (req, res) => {
     try {
-        const jobId = req.params.id
-
-        const job = await Job.findById(jobId).populate({
-            path: 'applications',
-            select: 'user status',
-            populate: {
-                path: 'user',
-                select: 'firstName lastName email',
-            },
-        })
+        const job = await Job
+                            .findById(req.params.id)
+                            .populate({
+                                path: 'applications',
+                                populate: {
+                                    path: 'user',
+                                },
+                            })
 
         if (!job) {
             return res.status(404).json({ message: 'Job not found.' })
         }
-
+        console.log(job.applications)
         const formattedApplicants = job.applications.map((application) => ({
             _id: application._id,
-            firstName: application.user.firstName,
-            lastName: application.user.lastName,
+            user: {
+                _id: application.user._id,
+                firstName: application.user.firstName,
+                lastName: application.user.lastName,
+                email: application.user.email,
+            },
             status: application.status,
-            email: application.user.email,
         }))
 
         return res.status(200).json(formattedApplicants)

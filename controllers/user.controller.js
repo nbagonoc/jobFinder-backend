@@ -15,7 +15,7 @@ const getProfile = async (req, res) => {
     }
 }
 
-// GET USER APPLICATIONS
+// GET USER APPLICATIONS (deprecate this soon, once frontend is uses new endpoint)
 const getUserApplications = async (req, res) => {
     try {
         const userId = req.user.id
