@@ -42,7 +42,7 @@ const getApplicationsFromUser = async (req, res) => {
         const applications = await Application
                                     .find({ user: userId })
                                     .select('-user -__v')
-                                    .populate('job', 'title position')
+                                    .populate('job', 'title position company')
                                     .select('-__v')
 
         if (!applications) {
