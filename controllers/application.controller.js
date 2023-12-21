@@ -80,7 +80,6 @@ const getApplicationsFromJob = async (req, res) => {
             },
             status: application.status,
         }))
-
         return res.status(200).json(formattedApplicants)
     } catch (error) {
         return res.status(500).json({ message: `Something went wrong. ${error.message}` })

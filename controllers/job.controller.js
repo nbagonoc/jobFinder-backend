@@ -101,7 +101,6 @@ const getJobApplicants = async (req, res) => {
         if (!job) {
             return res.status(404).json({ message: 'Job not found.' })
         }
-        console.log(job.applications)
         const formattedApplicants = job.applications.map((application) => ({
             _id: application._id,
             user: {
