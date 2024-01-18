@@ -3,14 +3,14 @@ const router = express.Router()
 
 const jobController = require('../../controllers/job.controller')
 const isAuth = require('../../middlewares/isAuth')
-const isModOrAdmin = require('../../middlewares/isModOrAdmin')
+const isRecruiterOrAdmin = require('../../middlewares/isRecruiterOrAdmin')
 
 // POST
 // api/jobs
 // recruiter can create job
 router.post(
     '/',
-    isModOrAdmin,
+    isRecruiterOrAdmin,
     jobController.createJob
 )
 
@@ -36,7 +36,7 @@ router.get(
 // everyone can view users list
 router.get(
     '/owned',
-    isModOrAdmin,
+    isRecruiterOrAdmin,
     jobController.getOwnedJobs
 )
 
@@ -53,7 +53,7 @@ router.get(
 // get list of applicants associated with the jobID
 router.get(
     '/:id/applicants',
-    isModOrAdmin,
+    isRecruiterOrAdmin,
     jobController.getJobApplicants
 )
 
@@ -62,7 +62,7 @@ router.get(
 // recruiter can edit job details
 router.put(
     '/:id',
-    isModOrAdmin,
+    isRecruiterOrAdmin,
     jobController.updateJob
 )
 
@@ -71,7 +71,7 @@ router.put(
 // recruiter can delete job
 router.delete(
     '/:id',
-    isModOrAdmin,
+    isRecruiterOrAdmin,
     jobController.deleteJob
 )
 

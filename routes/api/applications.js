@@ -3,7 +3,7 @@ const router = express.Router()
 
 const applicationController = require('../../controllers/application.controller')
 const isAuth = require('../../middlewares/isAuth')
-const isModOrAdmin = require('../../middlewares/isModOrAdmin')
+const isRecruiterOrAdmin = require('../../middlewares/isRecruiterOrAdmin')
 
 // POST
 // api/applications/:id/job
@@ -19,7 +19,7 @@ router.post(
 // get list of applicants associated with the job_id
 router.get(
     '/:id/job',
-    isModOrAdmin,
+    isRecruiterOrAdmin,
     applicationController.getApplicationsFromJob
 )
 
@@ -37,7 +37,7 @@ router.get(
 // recruiter can update application status
 router.put(
     '/:id',
-    isModOrAdmin,
+    isRecruiterOrAdmin,
     applicationController.updateApplicationStatus
 )
 

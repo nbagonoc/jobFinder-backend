@@ -15,7 +15,7 @@ const getProfile = async (req, res) => {
     }
 }
 
-// GET USER APPLICATIONS (deprecate this soon, once frontend is uses new endpoint)
+// GET USER APPLICATIONS (deprecate this soon, once frontend is uses new endpoint /api/applications)
 const getUserApplications = async (req, res) => {
     try {
         const userId = req.user.id
@@ -50,32 +50,33 @@ const getUser = async (req, res) => {
 }
 
 // GET USERS
-const getUsers = async (req, res) => {
-    try {
-        const users = await User.find({ role: 'user' }).select('-password -__v')
-        if (!users) {
-            return res.status(404).json({ message: 'Users not found.' })
-        }
-        return res.status(200).json(users)
-    } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
-    }
-}
+// disable this til we need
+// const getUsers = async (req, res) => {
+//     try {
+//         const users = await User.find({ role: 'user' }).select('-password -__v')
+//         if (!users) {
+//             return res.status(404).json({ message: 'Users not found.' })
+//         }
+//         return res.status(200).json(users)
+//     } catch (error) {
+//         throw new Error(`Something went wrong. ${error}`)
+//     }
+// }
 
 // UPDATE USER
-const updateUser = async (req, res) => {
+const updateProfile = async (req, res) => {
     const validation = validateUpdate(req.body)
+    const user = await User.findById(req.user.id).select('-password -__v -applications')
     if (!validation.isValid) {
         return res.status(400).json(validation.errors)
     }
     try {
-        const user = await User.findById(req.params.id)
         if (!user) {
             return res.status(404).json({ message: 'User not found.' })
         }
 
-        const { firstName, lastName, role } = req.body
-        user.set({ firstName, lastName, role })
+        const { firstName, lastName } = req.body
+        user.set({ firstName, lastName })
         await user.save()
         return res.status(200).json({ message: 'User updated!' })
     } catch (error) {
@@ -84,6 +85,7 @@ const updateUser = async (req, res) => {
 }
 
 // DELETE USER
+// disable this til we need
 // const deleteUser = async (req, res) => {
 //     try {
 //         const user = await User.findById(req.params.id)
@@ -101,19 +103,12 @@ const updateUser = async (req, res) => {
 // VALIDATE UPDATE
 const validateUpdate = (data) => {
     let errors = {}
-
-    if (validator.isEmpty(data.firstName, { ignore_whitespace: true }))
-        errors.firstName = 'First name is required'
-    if (validator.isEmpty(data.lastName, { ignore_whitespace: true }))
-        errors.lastName = 'Last name is required'
-    if (!validator.isEmail(data.email))
-        errors.email = 'Email is invalid'
-    if (validator.isEmpty(data.email, { ignore_whitespace: true }))
-        errors.email = 'Email is required'
-    if (!validator.equals(data.role, 'recruiter') && !validator.equals(data.role, 'user'))
-        errors.role = 'Role is invalid'
-    if (validator.isEmpty(data.role, { ignore_whitespace: true }))
-        errors.role = 'Role is required'
+    if (data.firstName === undefined || validator.isEmpty(data.firstName, { ignore_whitespace: true })) {
+        errors.firstName = 'First name is required';
+    }
+    if (data.lastName === undefined || validator.isEmpty(data.lastName, { ignore_whitespace: true })) {
+        errors.lastName = 'Last name is required';
+    }
     return {
         errors,
         isValid: Object.keys(errors).length === 0,
@@ -123,8 +118,8 @@ const validateUpdate = (data) => {
 module.exports = {
     getProfile,
     getUser,
-    getUsers,
-    updateUser,
+    // getUsers,
+    updateProfile,
     // deleteUser,
     getUserApplications,
     validateUpdate

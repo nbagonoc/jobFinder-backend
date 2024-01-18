@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const key = require('../configs/dbSecretKeys')
 
-const isModOrAdmin = async (req, res, next) => {
+const isRecruiterOrAdmin = async (req, res, next) => {
     const { authorization } = req.headers
 
     if (!authorization) {
@@ -28,4 +28,4 @@ const isModOrAdmin = async (req, res, next) => {
     }
 }
 
-module.exports = isModOrAdmin
+module.exports = isRecruiterOrAdmin

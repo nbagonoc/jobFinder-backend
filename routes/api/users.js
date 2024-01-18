@@ -3,20 +3,21 @@ const router = express.Router()
 const isAdmin = require('../../middlewares/isAdmin')
 const isAuth = require('../../middlewares/isAuth')
 const userController = require('../../controllers/user.controller')
-const isModOrAdmin = require('../../middlewares/isModOrAdmin')
+const isRecruiterOrAdmin = require('../../middlewares/isRecruiterOrAdmin')
 
 // GET
 // api/users
-// administrator/recruiter can view users list
-router.get(
-    '/',
-    isModOrAdmin,
-    userController.getUsers
-)
+// deprecate this
+// recruiter can view users list
+// router.get(
+//     '/',
+//     isRecruiterOrAdmin,
+//     userController.getUsers
+// )
 
 // GET
 // api/users/profile
-// user view view their profile
+// authenticated users can view their profile
 router.get(
     '/profile',
     isAuth,
@@ -25,7 +26,7 @@ router.get(
 
 // GET
 // api/users/applications
-// user can view their applications
+// authenticated users can view their applications
 router.get(
     '/applications',
     isAuth,
@@ -34,28 +35,28 @@ router.get(
 
 // GET
 // api/users/view/:id
-// administrator/recruiter can view user details
+// recruiter can view user details
 router.get(
     '/view/:id',
-    isModOrAdmin,
+    isRecruiterOrAdmin,
     userController.getUser
 )
 
 // PUT
 // api/users/update
-// administrator/recruiter can edit user details
+// authenticated users can edit user details
 router.put(
-    '/update/:id',
+    '/',
     isAuth,
-    userController.updateUser
+    userController.updateProfile
 )
 
 // DELETE
 // api/users/delete/:id
-// administrator/recruiter can delete user
+// recruiter can delete user
 // router.delete(
 //     '/delete/:id',
-//     isModOrAdmin,
+//     isRecruiterOrAdmin,
 //     userController.deleteUser
 // )
 
