@@ -1,6 +1,14 @@
 const User = require('../models/User')
 const Application = require('../models/Application')
-const validator = require("validator")
+const validator = require('validator')
+const S3 = require('aws-sdk/clients/s3')
+
+const s3 = new S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_DEFAULT_REGION,
+    bucket: process.env.AWS_BUCKET
+})
 
 // VIEW PROFILE
 const getProfile = async (req, res) => {
@@ -49,6 +57,66 @@ const getUser = async (req, res) => {
     }
 }
 
+// UPDATE USER
+const updateProfile = async (req, res) => {
+    const validation = validateUpdate(req.body)
+    const user = await User.findById(req.user.id).select('-password -__v -applications')
+
+    if (!validation.isValid) {
+        return res.status(400).json(validation.errors)
+    }
+    await handleFileUpload(req.file, user)
+
+    try {
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' })
+        }
+        const { firstName, lastName } = req.body
+        user.set({ firstName, lastName })
+        
+        await user.save()
+        
+        return res.status(200).json({ message: 'User updated!' })
+    } catch (error) {
+        // throw new Error(`Something went wrong. ${error}`)
+        return res.status(500).json({ error: 'Failed to update profile. Please try again later.' });
+    }
+}
+
+// VALIDATE UPDATE
+const validateUpdate = (data) => {
+    let errors = {}
+    if (data.firstName === undefined || validator.isEmpty(data.firstName, { ignore_whitespace: true })) {
+        errors.firstName = 'First name is required';
+    }
+    if (data.lastName === undefined || validator.isEmpty(data.lastName, { ignore_whitespace: true })) {
+        errors.lastName = 'Last name is required';
+    }
+    //check mimetype of uploaded file
+    if (data.photo !== undefined && !data.photo.match(/(jpg|jpeg|png)$/)) {
+        errors.photo = 'Invalid file type. Only jpg, jpeg, and png files are allowed.'
+    }
+    return {
+        errors,
+        isValid: Object.keys(errors).length === 0,
+    }
+}
+
+// HANDLE FILE UPLOAD
+const handleFileUpload = async (file, user) => {
+    if (file) {
+        const params = {
+            Bucket: process.env.AWS_BUCKET,
+            Key: `profiles/${user.id}_${file.originalname}`,
+            Body: file.buffer,
+            ContentType: file.mimetype,
+            ACL: 'public-read'
+        };
+        const data = await s3.upload(params).promise() // upload to s3
+        user.set({ photo: data.Location }) // set user photo to s3 url
+    }
+}
+
 // GET USERS
 // disable this til we need
 // const getUsers = async (req, res) => {
@@ -62,27 +130,6 @@ const getUser = async (req, res) => {
 //         throw new Error(`Something went wrong. ${error}`)
 //     }
 // }
-
-// UPDATE USER
-const updateProfile = async (req, res) => {
-    const validation = validateUpdate(req.body)
-    const user = await User.findById(req.user.id).select('-password -__v -applications')
-    if (!validation.isValid) {
-        return res.status(400).json(validation.errors)
-    }
-    try {
-        if (!user) {
-            return res.status(404).json({ message: 'User not found.' })
-        }
-
-        const { firstName, lastName } = req.body
-        user.set({ firstName, lastName })
-        await user.save()
-        return res.status(200).json({ message: 'User updated!' })
-    } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
-    }
-}
 
 // DELETE USER
 // disable this til we need
@@ -98,22 +145,6 @@ const updateProfile = async (req, res) => {
 //         throw new Error(`Something went wrong. ${error}`)
 //     }
 // }
-
-
-// VALIDATE UPDATE
-const validateUpdate = (data) => {
-    let errors = {}
-    if (data.firstName === undefined || validator.isEmpty(data.firstName, { ignore_whitespace: true })) {
-        errors.firstName = 'First name is required';
-    }
-    if (data.lastName === undefined || validator.isEmpty(data.lastName, { ignore_whitespace: true })) {
-        errors.lastName = 'Last name is required';
-    }
-    return {
-        errors,
-        isValid: Object.keys(errors).length === 0,
-    }
-}
 
 module.exports = {
     getProfile,

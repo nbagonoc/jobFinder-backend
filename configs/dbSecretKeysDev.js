@@ -1,5 +1,4 @@
 module.exports = {
-    // mongoURI: "mongodb+srv://nbagonoc:f*t@mean-multi-user.it4cg.mongodb.net/mean-multi-user?retryWrites=true&w=majority"
-    mongoURI: 'mongodb://localhost:27017/Joboard', // local
-    secretOrKey: 'l0c@ls3cr3t', // local
+    mongoURI: process.env.MONGO_URI,
+    secretOrKey: process.env.SECRET_OR_KEY,
 }

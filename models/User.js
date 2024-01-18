@@ -14,6 +14,10 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    photo: {
+        type: String,
+        default: 'https://placehold.co/150',
+    },
     role: {
         type: String,
         default: 'applicant',

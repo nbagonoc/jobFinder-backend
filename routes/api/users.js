@@ -1,9 +1,13 @@
 const express = require('express')
-const router = express.Router()
+const multer = require('multer')
 const isAdmin = require('../../middlewares/isAdmin')
 const isAuth = require('../../middlewares/isAuth')
 const userController = require('../../controllers/user.controller')
 const isRecruiterOrAdmin = require('../../middlewares/isRecruiterOrAdmin')
+
+const router = express.Router()
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 
 // GET
 // api/users
@@ -48,6 +52,7 @@ router.get(
 router.put(
     '/',
     isAuth,
+    upload.single('photo'),
     userController.updateProfile
 )
 
