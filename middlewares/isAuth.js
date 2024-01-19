@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 const User = require('../models/User')
-const key = require('../configs/dbSecretKeys')
+const key = process.env.SECRET_OR_KEY
 
 const isAuth = async (req, res, next) => {
     const { authorization } = req.headers
@@ -12,7 +12,7 @@ const isAuth = async (req, res, next) => {
 
     try {
         const token = authorization.split(' ')[1]
-        const { _id } = jwt.verify(token, key.secretOrKey)
+        const { _id } = jwt.verify(token, key)
 
         req.user = await User.findOne({ _id }).select('_id')
         next()
@@ -20,7 +20,7 @@ const isAuth = async (req, res, next) => {
         if (error.name === 'TokenExpiredError') {
             return res.status(401).json({ message: 'Token has expired' });
         }
-        return res.status(500).json({ message: 'Internal Server Error' });
+        return res.status(500).json({ message: 'Internal Server Error'});
     }
 }
 

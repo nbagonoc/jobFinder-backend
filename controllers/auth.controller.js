@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const validator = require('validator')
 
 const User = require('../models/User')
-const key = require('../configs/dbSecretKeys')
+const key = process.env.SECRET_OR_KEY
 
 // REGISTER
 const register = async (req, res) => {
@@ -117,7 +117,7 @@ const passwordChecker = async (password, comparePassword) => {
 
 // JWT SIGN
 const tokenizer = (payload) => {
-    const token = jwt.sign(payload, key.secretOrKey, { expiresIn: 86400 })
+    const token = jwt.sign(payload, key, { expiresIn: 86400 })
     return token
 }
 
