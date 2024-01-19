@@ -2,6 +2,7 @@ const User = require('../models/User')
 const Application = require('../models/Application')
 const validator = require('validator')
 const S3 = require('aws-sdk/clients/s3')
+require("aws-sdk/lib/maintenance_mode_message").suppress = true;``
 
 const s3 = new S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
