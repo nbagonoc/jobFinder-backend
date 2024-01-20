@@ -1,4 +1,5 @@
 const About = require('../models/About')
+const User = require('../models/User')
 const validator = require('validator')
 
 // CREATE ABOUT
@@ -12,7 +13,11 @@ const createAbout = async (req, res) => {
             about: req.body.about,
         })
 
-        await About.create(newAbout)
+        // Create the new About document
+        const createdAbout = await About.create(newAbout);
+        // Update the corresponding User document to reference the new About
+        await User.findByIdAndUpdate(req.user._id, { $set: { about: createdAbout._id } });
+
         res.status(200).json({ message: 'About created' })
     } catch (error) {
         throw new Error(`Something went wrong. ${error}`)

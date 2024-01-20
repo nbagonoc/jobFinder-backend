@@ -14,7 +14,10 @@ const s3 = new S3({
 // VIEW PROFILE
 const getProfile = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select('-password -__v -applications')
+        const user = await User.findById(req.user.id)
+            .select('-password -__v')//i think we should hide applications
+            .populate('about', 'about')
+
         if (!user) {
             return res.status(404).json({ message: 'User not found.' })
         }
