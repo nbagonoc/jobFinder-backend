@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const UserSchema = new Schema({
-    firstName: {
+    firstName: {  //this should be moved to Profile
         type: String,
         required: true,
     },
-    lastName: {
+    lastName: {  //this should be moved to Profile
         type: String,
         required: true,
     },
@@ -14,13 +14,13 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    photo: {
+    photo: { //this should be moved to Profile
         type: String,
         default: 'https://placehold.co/150',
     },
-    phone: {
+    phone: {  //this should be moved to Profile
         type: String,
-        required: true,
+        // required: true,
     },
     role: {
         type: String,
