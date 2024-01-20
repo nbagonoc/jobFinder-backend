@@ -4,13 +4,6 @@ const router = express.Router()
 const aboutController = require('../../controllers/about.controller')
 const isAuth = require('../../middlewares/isAuth')
 
-// authenticated users should be about to create an about
-router.post(
-    '/',
-    isAuth,
-    aboutController.createAbout
-)
-
 // authenticated users should be able to read their about
 router.get(
     '/',

@@ -2,25 +2,41 @@ const About = require('../models/About')
 const User = require('../models/User')
 const validator = require('validator')
 
-// CREATE ABOUT
-const createAbout = async (req, res) => {
+// CREATE ABOUT IF USER DOESN'T HAVE ONE
+const createAbout = async (userId, aboutText) => {
+    const newAbout = new About({
+        user: userId,
+        about: aboutText,
+    })
+
+    const createdAbout = await About.create(newAbout)
+
+    // Update the corresponding User document to reference the new About
+    await User.findByIdAndUpdate(userId, { $set: { about: createdAbout._id } })
+
+    return createdAbout
+}
+
+// UPDATE USER'S ABOUT
+const updateAbout = async (req, res) => {
     const validation = validate(req.body)
     if (!validation.isValid) return res.status(400).json(validation.errors)
 
     try {
-        const newAbout = new About({
-            user: req.user._id,
-            about: req.body.about,
-        })
+        let about = await About.findOne({ user: req.user._id })
 
-        // Create the new About document
-        const createdAbout = await About.create(newAbout);
-        // Update the corresponding User document to reference the new About
-        await User.findByIdAndUpdate(req.user._id, { $set: { about: createdAbout._id } });
+        if (!about) {
+            // If the user doesn't have an About document, create one
+            about = await createAbout(req.user._id, req.body.about)
+            return res.status(200).json({ message: 'About created' })
+        }
 
-        res.status(200).json({ message: 'About created' })
+        about.about = req.body.about
+        await about.save()
+
+        return res.status(200).json({ message: 'About updated.' })
     } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
 }
 
@@ -35,32 +51,9 @@ const getAbout = async (req, res) => {
 
         const formattedResponse = {
             about: about.about,
-        };
-
-        return res.status(200).json(formattedResponse)
-    } catch (error) {
-        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
-    }
-}
-
-
-// UPDATE USER'S ABOUT
-const updateAbout = async (req, res) => {
-    const validation = validate(req.body)
-    if (!validation.isValid) return res.status(400).json(validation.errors)
-
-    try {
-
-        const about = await About.findOne({ user: req.user._id })
-        
-        if (!about) {
-            return res.status(404).json({ message: 'About not found.' })
         }
 
-        about.about = req.body.about
-        await about.save()
-
-        return res.status(200).json({ message: 'About updated.' })
+        return res.status(200).json(formattedResponse)
     } catch (error) {
         return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
@@ -82,7 +75,7 @@ const validate = (data) => {
 }
 
 module.exports = {
-    createAbout,
+    // createAbout,
     getAbout,
     updateAbout,
 }
