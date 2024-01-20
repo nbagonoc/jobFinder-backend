@@ -72,8 +72,8 @@ const updateProfile = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found.' })
         }
-        const { firstName, lastName } = req.body
-        user.set({ firstName, lastName })
+        const { firstName, lastName, phone } = req.body
+        user.set({ firstName, lastName, phone })
         
         await user.save()
         
@@ -92,6 +92,9 @@ const validateUpdate = (data) => {
     }
     if (data.lastName === undefined || validator.isEmpty(data.lastName, { ignore_whitespace: true })) {
         errors.lastName = 'Last name is required';
+    }
+    if (data.phone === undefined || validator.isEmpty(data.phone, { ignore_whitespace: true })) {
+        errors.phone = 'Phone is required';
     }
     //check mimetype of uploaded file
     if (data.photo !== undefined && !data.photo.match(/(jpg|jpeg|png)$/)) {

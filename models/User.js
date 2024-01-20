@@ -18,6 +18,10 @@ const UserSchema = new Schema({
         type: String,
         default: 'https://placehold.co/150',
     },
+    phone: {
+        type: String,
+        required: true,
+    },
     role: {
         type: String,
         default: 'applicant',
