@@ -217,6 +217,9 @@ const validate = (data) => {
         errors.position = 'Position is required'
     if (!('description' in data) || validator.isEmpty(data.description, { ignore_whitespace: true }))
         errors.description = 'Description is required'
+    // status
+    if ('status' in data && !validator.isEmpty(data.status, { ignore_whitespace: true }) && data.status !== 'Active' && data.status !== 'Closed')
+        errors.status = 'Status is invalid'
     return {
         errors,
         isValid: Object.keys(errors).length === 0,

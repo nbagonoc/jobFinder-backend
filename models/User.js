@@ -10,6 +10,9 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    company: {  //this should be moved to Profile
+        type: String,
+    },
     email: {
         type: String,
         required: true,

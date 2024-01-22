@@ -18,10 +18,10 @@ const register = async (req, res) => {
         const newUser = new User({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
+            company: req.body.company,
             email: req.body.email,
             role: req.body.role === 'recruiter' ? 'recruiter' : 'applicant',
             password: hashedPassword,
-            // company: req.body.company,
         })
 
         await newUser.save()
@@ -86,6 +86,8 @@ const validateRegister = (data) => {
         errors.firstName = 'First name is required'
     if (validator.isEmpty(data.lastName, { ignore_whitespace: true }))
         errors.lastName = 'Last name is required'
+    if (data.role == 'recruiter' && validator.isEmpty(data.company, { ignore_whitespace: true }))
+        errors.company = 'Company is required'
     if (!validator.isEmail(data.email)) errors.email = 'Email is invalid'
     if (validator.isEmpty(data.email, { ignore_whitespace: true }))
         errors.email = 'Email is required'

@@ -46,6 +46,11 @@ const JobSchema = new Schema({
         ref: 'User',
         required: true,
     },
+    status: {
+        type: String,
+        enum: ['Active', 'Closed'],
+        default: 'Active',
+    },
     applications: [{
         type: Schema.Types.ObjectId,
         ref: 'Application',
