@@ -8,9 +8,7 @@ const createAbout = async (userId, aboutText) => {
         user: userId,
         about: aboutText,
     })
-
     const createdAbout = await About.create(newAbout)
-
     // Update the corresponding User document to reference the new About
     await User.findByIdAndUpdate(userId, { $set: { about: createdAbout._id } })
 
@@ -19,8 +17,6 @@ const createAbout = async (userId, aboutText) => {
 
 // UPDATE USER'S ABOUT
 const updateAbout = async (req, res) => {
-    const validation = validate(req.body)
-    if (!validation.isValid) return res.status(400).json(validation.errors)
 
     try {
         let about = await About.findOne({ user: req.user._id })
