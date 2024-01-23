@@ -18,7 +18,7 @@ const isRecruiterOrAdmin = async (req, res, next) => {
             return res.status(401).json({ message: 'Request is not authorized' })
         }
 
-        req.user = await User.findOne({ _id }).select('_id')
+        req.user = await User.findOne({ _id }).select('_id company')
         next()
     } catch (error) {
         if (error.name === 'TokenExpiredError') {

@@ -10,7 +10,7 @@ const createJob = async (req, res) => {
     try {
         const newJob = new Job({
             title: req.body.title,
-            company: req.body.company,
+            company: req.user.company,
             location: req.body.location,
             category: req.body.category,
             salary: req.body.salary,
@@ -189,8 +189,8 @@ const validate = (data) => {
 
     if (!('title' in data) || validator.isEmpty(data.title, { ignore_whitespace: true }))
         errors.title = 'Title is required'
-    if (!('company' in data) || validator.isEmpty(data.company, { ignore_whitespace: true }))
-        errors.company = 'Company is required'
+    // if (!('company' in data) || validator.isEmpty(data.company, { ignore_whitespace: true }))
+    //     errors.company = 'Company is required'
     if (!('location' in data) || validator.isEmpty(data.location, { ignore_whitespace: true }))
         errors.location = 'Location is required'
     // category
