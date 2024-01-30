@@ -1,8 +1,9 @@
 const User = require('../models/User')
 const Application = require('../models/Application')
 const validator = require('validator')
+const sharp = require('sharp')
 const S3 = require('aws-sdk/clients/s3')
-require("aws-sdk/lib/maintenance_mode_message").suppress = true;``
+require('aws-sdk/lib/maintenance_mode_message').suppress = true
 
 const s3 = new S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -109,9 +110,19 @@ const validateUpdate = (data) => {
     }
 }
 
+//CROP PHOTO
+const cropPhoto = async (file) => {
+    const image = await sharp(file.buffer)
+        .resize(150, 150)
+        .toBuffer()
+
+    return image
+}
+
 // HANDLE FILE UPLOAD
 const handleFileUpload = async (file, user) => {
     if (file) {
+        file.buffer = await cropPhoto(file)
         const params = {
             Bucket: process.env.AWS_BUCKET,
             Key: `profiles/${user.id}_${file.originalname}`,
