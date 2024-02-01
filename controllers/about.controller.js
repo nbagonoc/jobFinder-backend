@@ -17,6 +17,8 @@ const createAbout = async (userId, aboutText) => {
 
 // UPDATE USER'S ABOUT
 const updateAbout = async (req, res) => {
+    const validation = validate(req.body)
+    if (!validation.isValid) return res.status(400).json(validation.errors)
 
     try {
         let about = await About.findOne({ user: req.user._id })
