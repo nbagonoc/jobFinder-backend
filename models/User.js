@@ -38,6 +38,14 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'About',
     },
+    education: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Education',
+    }],
+    experience: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Experience',
+    }],
     password: {
         type: String,
         required: true,

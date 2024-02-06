@@ -1,4 +1,6 @@
 const User = require('../models/User')
+const Education = require('../models/Education')
+const Experience = require('../models/Experience')
 const Application = require('../models/Application')
 const validator = require('validator')
 const sharp = require('sharp')
@@ -18,6 +20,8 @@ const getProfile = async (req, res) => {
         const user = await User.findById(req.user.id)
             .select('-password -__v')//i think we should hide applications
             .populate('about', 'about')
+            .populate('education', 'school degree fieldofstudy from to current description')
+            .populate('experience', 'title company location from to current description')
 
         if (!user) {
             return res.status(404).json({ message: 'User not found.' })
