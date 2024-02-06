@@ -14,10 +14,6 @@ const EducationSchema = new Schema({
         type: String,
         required: true,
     },
-    fieldofstudy: {
-        type: String,
-        required: true,
-    },
     from: {
         type: Date,
         required: true,
@@ -28,9 +24,6 @@ const EducationSchema = new Schema({
     current: {
         type: Boolean,
         default: false,
-    },
-    description: {
-        type: String,
     },
 })
 
