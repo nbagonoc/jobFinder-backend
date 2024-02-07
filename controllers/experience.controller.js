@@ -1,4 +1,7 @@
-// CREATE USER's EXPERIENCE
+const Experience = require('../models/Experience')
+const User = require('../models/User')
+const validator = require('validator')
+
 const createExperience = async (req, res) => {
     const validation = validate(req.body)
     if (!validation.isValid) return res.status(400).json(validation.errors)
@@ -26,7 +29,6 @@ const createExperience = async (req, res) => {
     }
 }
 
-// GET USER's EXPERIENCE
 const getExperience = async (req, res) => {
     try {
         const experience = await Experience.find({ user: req.user.id })
@@ -37,7 +39,6 @@ const getExperience = async (req, res) => {
     }
 }
 
-// GET USER's EXPERIENCE BY ID
 const getExperienceById = async (req, res) => {
     try {
         const experience = await Experience.findById(req.params.id)
@@ -56,7 +57,6 @@ const getExperienceById = async (req, res) => {
     }
 }
 
-// EDIT USER's EXPERIENCE
 const updateExperience = async (req, res) => {
     const validation = validate(req.body)
     if (!validation.isValid) return res.status(400).json(validation.errors)
@@ -80,7 +80,6 @@ const updateExperience = async (req, res) => {
     }
 }
 
-// DELETE USER's EXPERIENCE
 const deleteExperience = async (req, res) => {
     try {
         const experience = await Experience.findById(req.params.id)
@@ -98,6 +97,30 @@ const deleteExperience = async (req, res) => {
         return res.status(200).json({ message: 'Experience deleted.' })
     } catch (error) {
         return res.status(500).json({ message: `Something went wrong. ${error.message}` })
+    }
+}
+
+// VALIDATE
+const validate = (data) => {
+    let errors = {}
+
+    if (validator.isEmpty(data.title)) {
+        errors.title = 'Title is required.'
+    }
+    if (validator.isEmpty(data.company)) {
+        errors.company = 'Company is required.'
+    }
+    if (validator.isEmpty(data.location)) {
+        errors.location = 'Location is required.'
+    }
+    if (validator.isEmpty(data.from)) {
+        errors.from = 'From date is required.'
+    }
+    if (validator.isEmpty(data.to) && !data.current) {
+        errors.to = 'To date is required.'
+    }
+    if (validator.isEmpty(data.description)) {
+        errors.description = 'Description is required.'
     }
 }
 

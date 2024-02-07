@@ -2,7 +2,6 @@ const Education = require('../models/Education')
 const User = require('../models/User')
 const validator = require('validator')
 
-// CREATE USER'S EDUCATION
 const createEducation = async (req, res) => {
     const validation = validate(req.body)
     if (!validation.isValid) return res.status(400).json(validation.errors)
@@ -28,7 +27,6 @@ const createEducation = async (req, res) => {
     }
 }
 
-// GET USER'S EDUCATION
 const getEducation = async (req, res) => {
     try {
         const education = await Education.find({ user: req.user.id })
@@ -39,7 +37,6 @@ const getEducation = async (req, res) => {
     }
 }
 
-// GET USER'S EDUCATION BY ID
 const getEducationById = async (req, res) => {
     try {
         const education = await Education.findById(req.params.id)
@@ -58,7 +55,6 @@ const getEducationById = async (req, res) => {
     }
 }
 
-// UPDATE USER'S EDUCATION
 const updateEducation = async (req, res) => {
     const validation = validate(req.body)
     if (!validation.isValid) return res.status(400).json(validation.errors)
@@ -86,10 +82,8 @@ const updateEducation = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
-
 }
 
-// DELETE USER'S EDUCATION
 const deleteEducation = async (req, res) => {
     try {
         const education = await Education.findById(req.params.id)
