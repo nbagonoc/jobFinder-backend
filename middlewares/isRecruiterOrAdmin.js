@@ -22,7 +22,7 @@ const isRecruiterOrAdmin = async (req, res, next) => {
         next()
     } catch (error) {
         if (error.name === 'TokenExpiredError') {
-            return res.status(401).json({ message: 'Token has expired' });
+            return res.status(401).json({ message: 'Token has expired: Please login' });
         }
         return res.status(500).json({ message: 'Internal Server Error' });
     }
