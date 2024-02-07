@@ -16,7 +16,8 @@ npm run test
 ```
 
 - Back-end Backlog:
+ - Create factory and seeder
 
 - Features:
- - Create factory and seeder
+ - To updates...
     
