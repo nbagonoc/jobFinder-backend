@@ -21,7 +21,7 @@ const createEducation = async (req, res) => {
         // Update the corresponding User document to reference the new Education
         await User.findByIdAndUpdate(req.user.id, { $push: { education: createdEducation._id } })
 
-        return res.status(201).json(createdEducation)
+        return res.status(201).json({ message: 'Education created.' })
     } catch (error) {
         return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }

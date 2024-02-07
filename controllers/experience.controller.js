@@ -11,8 +11,6 @@ const createExperience = async (req, res) => {
             user: req.user.id,
             title: req.body.title,
             company: req.body.company,
-            // lets remove this for now to keep it simple
-            // location: req.body.location,
             from: req.body.from,
             to: req.body.to,
             current: req.body.current,
@@ -24,7 +22,7 @@ const createExperience = async (req, res) => {
         // Update the corresponding User document to reference the new Experience
         await User.findByIdAndUpdate(req.user.id, { $push: { experience: createdExperience._id } })
 
-        return res.status(201).json(createdExperience)
+        return res.status(201).json({ message: 'Experience created.' })
     } catch (error) {
         return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
@@ -75,7 +73,7 @@ const updateExperience = async (req, res) => {
 
         const updatedExperience = await Experience.findByIdAndUpdate(req.params.id, req.body, { new: true })
 
-        return res.status(200).json(updatedExperience)
+        return res.status(200).json({ message: 'Experience updated.'})
     } catch (error) {
         return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
@@ -111,10 +109,6 @@ const validate = (data) => {
     if (validator.isEmpty(data.company)) {
         errors.company = 'Company is required.'
     }
-    // lets remove this for now to keep it simple
-    // if (validator.isEmpty(data.location)) {
-    //     errors.location = 'Location is required.'
-    // }
     if (validator.isEmpty(data.from)) {
         errors.from = 'From date is required.'
     }
@@ -126,6 +120,11 @@ const validate = (data) => {
     }
     if (validator.isEmpty(data.description)) {
         errors.description = 'Description is required.'
+    }
+
+    return {
+        errors,
+        isValid: Object.keys(errors).length === 0,
     }
 }
 
