@@ -11,7 +11,8 @@ const createExperience = async (req, res) => {
             user: req.user.id,
             title: req.body.title,
             company: req.body.company,
-            location: req.body.location,
+            // lets remove this for now to keep it simple
+            // location: req.body.location,
             from: req.body.from,
             to: req.body.to,
             current: req.body.current,
@@ -110,9 +111,10 @@ const validate = (data) => {
     if (validator.isEmpty(data.company)) {
         errors.company = 'Company is required.'
     }
-    if (validator.isEmpty(data.location)) {
-        errors.location = 'Location is required.'
-    }
+    // lets remove this for now to keep it simple
+    // if (validator.isEmpty(data.location)) {
+    //     errors.location = 'Location is required.'
+    // }
     if (validator.isEmpty(data.from)) {
         errors.from = 'From date is required.'
     }

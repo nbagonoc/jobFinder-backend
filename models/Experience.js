@@ -14,10 +14,11 @@ const ExperienceSchema = new Schema({
         type: String,
         required: true,
     },
-    location: {
-        type: String,
-        required: true,
-    },
+    // lets remove this for now to keep it simple
+    // location: {
+    //     type: String,
+    //     required: true,
+    // },
     from: {
         type: Date,
         required: true,
