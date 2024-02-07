@@ -123,6 +123,9 @@ const validate = (data) => {
     if (!data.current && validator.isEmpty(data.to)) {
         errors.to = 'To date is required.'
     }
+    if (data.current !== undefined && typeof data.current !== 'boolean') {
+        errors.current = 'Current must be a boolean.'
+    }
 
     return {
         errors,
