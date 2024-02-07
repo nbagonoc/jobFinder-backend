@@ -32,10 +32,6 @@ const ExperienceSchema = new Schema({
     description: {
         type: String,
     },
-    date: {
-        type: Date,
-        default: Date.now,
-    },
 })
 
 module.exports = mongoose.model('Experience', ExperienceSchema)
