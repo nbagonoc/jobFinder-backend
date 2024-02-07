@@ -55,7 +55,11 @@ const getUserApplications = async (req, res) => {
 // GET USER
 const getUser = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id).select('-password -__v')
+        const user = await User.findById(req.params.id)
+        .select('-password -__v')
+        .populate('about', 'about')
+        .populate('education', 'school degree fieldofstudy from to current description')
+        .populate('experience', 'title company location from to current description')
 
         if (!user) {
             return res.status(404).json({ message: 'User not found.' })
