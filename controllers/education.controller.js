@@ -29,7 +29,7 @@ const createEducation = async (req, res) => {
 
 const getEducation = async (req, res) => {
     try {
-        const education = await Education.find({ user: req.user.id })
+        const education = await Education.find({ user: req.user.id }).select('-user')
 
         return res.status(200).json(education)
     } catch (error) {
