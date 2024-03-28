@@ -27,11 +27,25 @@ const createEducation = async (req, res) => {
     }
 }
 
-const getEducation = async (req, res) => {
+const getEducations = async (req, res) => {
     try {
         const education = await Education.find({ user: req.user.id }).select('-user')
 
         return res.status(200).json(education)
+    } catch (error) {
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
+    }
+}
+
+const getEducationsByUserId = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).populate('education', '-user')
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        return res.status(200).json(user.education)
     } catch (error) {
         return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
@@ -135,7 +149,8 @@ const validate = (data) => {
 
 module.exports = {
     createEducation,
-    getEducation,
+    getEducations,
+    getEducationsByUserId,
     getEducationById,
     updateEducation,
     deleteEducation,

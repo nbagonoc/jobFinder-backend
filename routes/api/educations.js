@@ -13,13 +13,19 @@ router.post(
 router.get(
     '/',
     isAuth,
-    educationController.getEducation
+    educationController.getEducations
 )
 
 router.get(
     '/:id',
     isAuth,
     educationController.getEducationById
+)
+
+router.get(
+    '/:id/user',
+    isAuth,
+    educationController.getEducationsByUserId
 )
 
 router.put(
