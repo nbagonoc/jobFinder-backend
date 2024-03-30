@@ -38,7 +38,7 @@ const getExperience = async (req, res) => {
     }
 }
 
-const getExperienceByUserId = async (req, res) => {
+const getExperienceByUserId = async (req, res) => { //might not be needing this anymore
     try {
         const user = await User.findById(req.params.id).populate('experience', '-user')
 
@@ -145,7 +145,7 @@ const validate = (data) => {
 module.exports = {
     createExperience,
     getExperience,
-    getExperienceByUserId,
+    getExperienceByUserId, //might not be needing this anymore
     getExperienceById,
     updateExperience,
     deleteExperience,

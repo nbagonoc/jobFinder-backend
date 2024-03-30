@@ -33,7 +33,7 @@ const getSkill = async (req, res) => {
     }
 }
 
-const getSkillByUserId = async (req, res) => {
+const getSkillByUserId = async (req, res) => { //might not be needing this anymore
     try {
         const user = await User.findById(req.params.id).populate('skill', '-user')
 
@@ -127,7 +127,7 @@ const validate = (data) => {
 module.exports = {
     createSkill,
     getSkill,
-    getSkillByUserId,
+    getSkillByUserId, //might not be needing this anymore
     getSkillById,
     updateSkill,
     deleteSkill,

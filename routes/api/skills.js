@@ -16,6 +16,7 @@ router.get(
     skillController.getSkill
 )
 
+//might not be needing this anymore
 router.get(
     '/:id/user',
     isAuth,

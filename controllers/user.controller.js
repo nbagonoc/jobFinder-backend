@@ -60,6 +60,7 @@ const getUser = async (req, res) => {
         .populate('about', 'about')
         .populate('education', 'school degree fieldofstudy from to current description')
         .populate('experience', 'title company location from to current description')
+        .populate('skill', 'skill')
 
         if (!user) {
             return res.status(404).json({ message: 'User not found.' })

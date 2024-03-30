@@ -37,7 +37,7 @@ const getEducations = async (req, res) => {
     }
 }
 
-const getEducationsByUserId = async (req, res) => {
+const getEducationsByUserId = async (req, res) => { //might not be needing this anymore
     try {
         const user = await User.findById(req.params.id).populate('education', '-user')
 
@@ -150,7 +150,7 @@ const validate = (data) => {
 module.exports = {
     createEducation,
     getEducations,
-    getEducationsByUserId,
+    getEducationsByUserId, //might not be needing this anymore
     getEducationById,
     updateEducation,
     deleteEducation,

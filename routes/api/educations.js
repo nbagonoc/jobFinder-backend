@@ -22,10 +22,11 @@ router.get(
     educationController.getEducationById
 )
 
+//might not be needing this anymore
 router.get(
     '/:id/user',
     isAuth,
-    educationController.getEducationsByUserId
+    educationController.getEducationsByUserId //might not be needing this anymore
 )
 
 router.put(
