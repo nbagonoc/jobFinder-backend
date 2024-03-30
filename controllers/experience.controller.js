@@ -38,6 +38,20 @@ const getExperience = async (req, res) => {
     }
 }
 
+const getExperienceByUserId = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).populate('experience', '-user')
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        return res.status(200).json(user.experience)
+    } catch (error) {
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
+    }
+}
+
 const getExperienceById = async (req, res) => {
     try {
         const experience = await Experience.findById(req.params.id)
@@ -131,6 +145,7 @@ const validate = (data) => {
 module.exports = {
     createExperience,
     getExperience,
+    getExperienceByUserId,
     getExperienceById,
     updateExperience,
     deleteExperience,

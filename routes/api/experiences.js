@@ -22,6 +22,12 @@ router.get(
     experienceController.getExperienceById
 )
 
+router.get(
+    '/:id/user',
+    isAuth,
+    experienceController.getExperienceByUserId
+)
+
 router.put(
     '/:id',
     isAuth,
