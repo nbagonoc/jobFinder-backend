@@ -33,6 +33,20 @@ const getSkill = async (req, res) => {
     }
 }
 
+const getSkillByUserId = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).populate('skill', '-user')
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        return res.status(200).json(user.skill)
+    } catch (error) {
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
+    }
+}
+
 const getSkillById = async (req, res) => {
     try {
         const skill = await Skill.findById(req.params.id)
@@ -98,7 +112,6 @@ const deleteSkill = async (req, res) => {
 
 // VALIDATE
 const validate = (data) => {
-    console.log(data)
     let errors = {}
 
     if (validator.isEmpty(data.skill)) {
@@ -114,6 +127,7 @@ const validate = (data) => {
 module.exports = {
     createSkill,
     getSkill,
+    getSkillByUserId,
     getSkillById,
     updateSkill,
     deleteSkill,

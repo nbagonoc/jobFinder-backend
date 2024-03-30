@@ -17,6 +17,12 @@ router.get(
 )
 
 router.get(
+    '/:id/user',
+    isAuth,
+    skillController.getSkillByUserId
+)
+
+router.get(
     '/:id',
     isAuth,
     skillController.getSkillById

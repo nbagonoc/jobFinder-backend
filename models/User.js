@@ -46,6 +46,10 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Experience',
     }],
+    skill: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Skill',
+    }],
     password: {
         type: String,
         required: true,
