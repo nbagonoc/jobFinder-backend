@@ -10,6 +10,11 @@ router.get(
     aboutController.getAbout
 )
 
+router.get(
+    '/:id',
+    aboutController.getAboutByUserId
+)
+
 router.put(
     '/',
     isAuth,

@@ -34,7 +34,9 @@ const updateAbout = async (req, res) => {
 
         return res.status(200).json({ message: 'About updated.' })
     } catch (error) {
-        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
+        return res
+            .status(500)
+            .json({ message: `Something went wrong. ${error.message}` })
     }
 }
 
@@ -42,7 +44,7 @@ const updateAbout = async (req, res) => {
 const getAbout = async (req, res) => {
     try {
         const about = await About.findOne({ user: req.user._id })
-        
+
         if (!about) {
             return res.status(404).json({ message: 'About not found.' })
         }
@@ -53,16 +55,40 @@ const getAbout = async (req, res) => {
 
         return res.status(200).json(formattedResponse)
     } catch (error) {
-        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
+        return res
+            .status(500)
+            .json({ message: `Something went wrong. ${error.message}` })
     }
 }
 
+// GET ABOUT BY USER ID
+const getAboutByUserId = async (req, res) => {
+    try {
+        const about = await About
+            .findOne({ user: req.params.id })
+            .populate({
+                path: 'user',
+                select: 'company'
+            })
+
+        if (!about) {
+            return res.status(404).json({ message: 'About not found.' })
+        }
+
+        return res.status(200).json(about)
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal Server Error' })
+    }
+}
 
 // VALIDATE
 const validate = (data) => {
     let errors = {}
 
-    if (!('about' in data) || validator.isEmpty(data.about, { ignore_whitespace: true })) {
+    if (
+        !('about' in data) ||
+        validator.isEmpty(data.about, { ignore_whitespace: true })
+    ) {
         errors.about = 'About is required.'
     }
 
@@ -75,5 +101,6 @@ const validate = (data) => {
 module.exports = {
     // createAbout,
     getAbout,
+    getAboutByUserId,
     updateAbout,
 }
