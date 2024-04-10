@@ -28,7 +28,7 @@ const getProfile = async (req, res) => {
         }
         return res.status(200).json(user)
     } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
 }
 
@@ -67,7 +67,7 @@ const getUser = async (req, res) => {
         }
         return res.status(200).json(user)
     } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
 }
 
@@ -92,7 +92,7 @@ const updateProfile = async (req, res) => {
         
         return res.status(200).json({ message: 'User updated!' })
     } catch (error) {
-        // throw new Error(`Something went wrong. ${error}`)
+        // return res.status(500).json({ message: `Something went wrong. ${error.message}` })
         return res.status(500).json({ error: 'Failed to update profile. Please try again later.' });
     }
 }
@@ -154,7 +154,7 @@ const handleFileUpload = async (file, user) => {
 //         }
 //         return res.status(200).json(users)
 //     } catch (error) {
-//         throw new Error(`Something went wrong. ${error}`)
+//         return res.status(500).json({ message: `Something went wrong. ${error.message}` })
 //     }
 // }
 
@@ -169,7 +169,7 @@ const handleFileUpload = async (file, user) => {
 //         await user.remove()
 //         return res.status(200).json({ message: 'User has been removed.' })
 //     } catch (error) {
-//         throw new Error(`Something went wrong. ${error}`)
+//         return res.status(500).json({ message: `Something went wrong. ${error.message}` })
 //     }
 // }
 

@@ -24,7 +24,7 @@ const createJob = async (req, res) => {
         await Job.create(newJob)
         res.status(200).json({ message: 'Job created' })
     } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
 }
 
@@ -82,7 +82,7 @@ const getJob = async (req, res) => {
         }
         return res.status(200).json(job)
     } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
 }
 
@@ -127,7 +127,7 @@ const getJobs = async (req, res) => {
         }
         return res.status(200).json(jobs)
     } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
 }
 
@@ -141,7 +141,7 @@ const getOwnedJobs = async (req, res) => {
         }
         return res.status(200).json(jobs)
     } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
 }
 
@@ -162,7 +162,7 @@ const updateJob = async (req, res) => {
 
         return res.status(200).json({ message: 'job updated!' })
     } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
 }
 
@@ -176,7 +176,7 @@ const deleteJob = async (req, res) => {
         await Job.deleteOne()
         return res.status(200).json({ message: 'job has been removed.' })
     } catch (error) {
-        throw new Error(`Something went wrong. ${error}`)
+        return res.status(500).json({ message: `Something went wrong. ${error.message}` })
     }
 }
 
