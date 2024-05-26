@@ -7,8 +7,13 @@ Just a screenshot of the backend REST API via postman
 
 <img width="1917" alt="jobFinderBackend" src="https://github.com/nbagonoc/jobFinder-backend/assets/30286941/2a113cc4-cfca-4009-b714-e9bccedb4bac">
 
-## Component Diagram:
+## Diagrams
+
+### Component Diagram:
 ![JobFinder Component Diagram - Page 1](https://github.com/nbagonoc/jobFinder-frontend/assets/30286941/36ee205e-3571-476e-9076-339e3fd4109b)
+
+### Use Case Diagram:
+![JobFinderUseCase](https://github.com/nbagonoc/jobFinder-frontend/assets/30286941/e2a6a38e-2eb3-449c-b4bd-1d83d43fdf1b)
 
 ## Features:
 - Applicant
