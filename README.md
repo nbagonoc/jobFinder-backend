@@ -2,6 +2,8 @@
 
 The back-end for JobFinder. Front-end can be found here(add link to the the front-end here).
 
+<img width="1917" alt="jobFinderBackend" src="https://github.com/nbagonoc/jobFinder-backend/assets/30286941/2a113cc4-cfca-4009-b714-e9bccedb4bac">
+
 ## Features:
 - Applicant
     - Manage applicant profile
