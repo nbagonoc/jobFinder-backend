@@ -49,3 +49,5 @@ npm run dev
 
 ## Backend Backlog:
 - Create factory and seeder
+
+TODO: Add screenshots to diagrams
