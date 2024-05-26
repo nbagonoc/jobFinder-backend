@@ -4,6 +4,7 @@ The back-end for JobFinder. Front-end can be found here(https://github.com/nbago
 
 ## Screenshots:
 Just a screenshot of the backend REST API via postman
+
 <img width="1917" alt="jobFinderBackend" src="https://github.com/nbagonoc/jobFinder-backend/assets/30286941/2a113cc4-cfca-4009-b714-e9bccedb4bac">
 
 ## Component Diagram:
