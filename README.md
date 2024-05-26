@@ -1,6 +1,6 @@
-## React + Vite
+## JobFinder Backend(NODE)
 
-The back-end for JobFinder. Front-end can be found here(add link to the the front-end here).
+The back-end for JobFinder. Front-end can be found here(https://github.com/nbagonoc/jobFinder-frontend).
 
 <img width="1917" alt="jobFinderBackend" src="https://github.com/nbagonoc/jobFinder-backend/assets/30286941/2a113cc4-cfca-4009-b714-e9bccedb4bac">
 
@@ -32,7 +32,6 @@ The back-end for JobFinder. Front-end can be found here(add link to the the fron
 - General
     - Sign-up
     - Sign-in
-
 
 ## How to run locally:
 - Setup .env file (follow env.example file)
