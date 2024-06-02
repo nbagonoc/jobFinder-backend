@@ -1,0 +1,88 @@
+@startuml
+actor Applicant
+actor Recruiter
+participant Frontend as "Front-end (React)"
+participant Backend as "Backend (Node/Express)"
+participant Database as "Database (MongoDB)"
+participant Cloud as "Cloud (AWS S3)"
+
+group General
+    Applicant -> Frontend: Sign-up form submission
+    Frontend -> Backend: HTTP POST /signup
+    Backend -> Database: Insert new user
+    Database -> Backend: Confirmation
+    Backend -> Frontend: Sign-up success
+
+    Applicant -> Frontend: Sign-in form submission
+    Frontend -> Backend: HTTP POST /signin
+    Backend -> Database: Validate user
+    Database -> Backend: Validation response
+    Backend -> Frontend: Sign-in success or failure
+end
+
+group Applicant Interactions
+    Applicant -> Frontend: Update profile
+    Frontend -> Backend: HTTP POST /updateProfile
+    Backend -> Cloud: Upload image
+    Cloud -> Backend: Upload confirmation
+    Backend -> Database: Update profile data
+    Database -> Backend: Update confirmation
+    Backend -> Frontend: Update success
+
+    Applicant -> Frontend: View profile
+    Frontend -> Backend: HTTP GET /profile
+    Backend -> Database: Fetch profile data
+    Database -> Backend: Profile data
+    Backend -> Frontend: Display profile
+
+    Applicant -> Frontend: View job postings
+    Frontend -> Backend: HTTP GET /jobPostings
+    Backend -> Database: Fetch job postings
+    Database -> Backend: Job postings data
+    Backend -> Frontend: Display job postings
+
+    Applicant -> Frontend: Apply for job
+    Frontend -> Backend: HTTP POST /applyJob
+    Backend -> Database: Insert application data
+    Database -> Backend: Insert confirmation
+    Backend -> Frontend: Apply success
+
+    Applicant -> Frontend: View job applications
+    Frontend -> Backend: HTTP GET /applications
+    Backend -> Database: Fetch applications
+    Database -> Backend: Applications data
+    Backend -> Frontend: Display applications
+end
+
+group Recruiter Interactions
+    Recruiter -> Frontend: Create job posting
+    Frontend -> Backend: HTTP POST /createJob
+    Backend -> Database: Insert job data
+    Database -> Backend: Insert confirmation
+    Backend -> Frontend: Job creation success
+
+    Recruiter -> Frontend: View job posting
+    Frontend -> Backend: HTTP GET /jobPosting
+    Backend -> Database: Fetch job posting data
+    Database -> Backend: Job posting data
+    Backend -> Frontend: Display job posting
+
+    Recruiter -> Frontend: Update job posting
+    Frontend -> Backend: HTTP POST /updateJob
+    Backend -> Database: Update job data
+    Database -> Backend: Update confirmation
+    Backend -> Frontend: Update success
+
+    Recruiter -> Frontend: View job applicants
+    Frontend -> Backend: HTTP GET /jobApplicants
+    Backend -> Database: Fetch applicants
+    Database -> Backend: Applicants data
+    Backend -> Frontend: Display applicants
+
+    Recruiter -> Frontend: Approve/Reject applicant
+    Frontend -> Backend: HTTP PUT /approveApplicant
+    Backend -> Database: Update applicant status
+    Database -> Backend: Update confirmation
+    Backend -> Frontend: Approval success
+end
+@enduml
