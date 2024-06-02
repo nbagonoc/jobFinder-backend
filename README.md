@@ -15,6 +15,9 @@ Just a screenshot of the backend REST API via postman
 ### Use Case Diagram:
 ![JobFinderUseCase](https://github.com/nbagonoc/jobFinder-frontend/assets/30286941/e2a6a38e-2eb3-449c-b4bd-1d83d43fdf1b)
 
+### Sequence Diagram:
+![jobFInderSequence](https://github.com/nbagonoc/jobFinder-backend/assets/30286941/85c5391c-5d8d-418c-b05d-ebd1d009cfe4)
+
 ## Features:
 - Applicant
     - Manage applicant profile
